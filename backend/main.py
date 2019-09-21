@@ -1,5 +1,6 @@
 #!flask/bin/python
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from pymongo import MongoClient
 import json
 
@@ -9,6 +10,7 @@ with open("keys.json", "r") as file:
     pw = data['PWORD']
 
 app = Flask(__name__)
+CORS(app)
 client = MongoClient("mongodb+srv://{}:{}@sunhackscluster-ijexw.gcp.mongodb.net/test?retryWrites=true&w=majority".format(uname, pw))
 cities_db = client.CitiesDatabase
 cities_collection = cities_db.cities
