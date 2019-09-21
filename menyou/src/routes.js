@@ -28,7 +28,13 @@ export default class Routes extends Component {
           <Route exact path="/explore" component={ () =>
               <Survey/>
             }/>
-            </Switch>
+          <Route exact path="/results" component={ () =>
+            <div>
+              results baby
+            </div>
+          }/>
+          </Switch>
+
 
     )
   }

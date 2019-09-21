@@ -1,0 +1,4 @@
+# [START app_yaml]
+service: default
+runtime: nodejs
+env: flex

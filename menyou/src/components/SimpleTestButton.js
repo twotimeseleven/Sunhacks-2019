@@ -16,7 +16,6 @@ export default class SimpleTestButton extends Component {
 
     testMe(props) {
       Results.anotherStaticMethod()
-      this.props.goForward()
     }
 
     render() {

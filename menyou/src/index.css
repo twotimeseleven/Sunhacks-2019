@@ -21,6 +21,10 @@ html {
 
 }
 
+.MuiSlider-markLabel {
+  font-size: 1.5em !important;
+}
+
 /* BACKGROUND STYLES */
 .main {
   padding: 60px;
@@ -46,9 +50,14 @@ html {
 }
 
 /* DIV ANIMATIONS */
-.bounce-in-div {
+.bounce-in-div1 {
   visibility: visible;
-  animation: bounce-in 0.4s;
+  animation: bounce-in 1.4s !important;
+}
+
+.bounce-in-div2 {
+  visibility: visible;
+  animation: bounce-in 1.4s !important;
 }
 
 .simple-trans-main > div {
@@ -59,7 +68,6 @@ html {
   justify-content: center;
   align-items: center;
   font-weight: 800;
-  font-size: 25em;
   will-change: transform, opacity;
   text-shadow: 0px 2px 40px #00000020, 0px 2px 5px #00000030;
 }
