@@ -28,7 +28,12 @@ class Routes extends Component {
             mode="horizontal"
             style={{ lineHeight: '54px' }}
           >
-            <Image src={img1} style={{ height: 50, width: 50, marginLeft: 20, marginTop: 5, marginBottom: 5}} verticalAlign='top' href="/" centered/>
+            <Menu.Item >
+              <Link to="/"/>
+              <Image src={img1} style={{ height: 50, width: 50, paddingTop: 5, paddingBottom: 5}} verticalAlign='top' />
+              Locale
+            </Menu.Item>
+
             <Menu.Item disabled className="demo">sunhacks 2019</Menu.Item>
 
           </Menu>
