@@ -14,6 +14,8 @@ export default class Landing extends Component {
     return (
       <Container style={{margin: 50}}>
         <h1>Welcome to our project. Find the best city for you. Take our test now.</h1>
+        <Button size="huge" as={Link} to="/test.html"> test me </Button>
+
         <Button size="huge" as={Link} to="explore"> start the process </Button>
       </Container>
     )
