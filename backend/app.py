@@ -32,6 +32,13 @@ def do_everything():
         dict_to_query[arg[0]] = arg[1]
     lat = dict_to_query['lat']
     lon = dict_to_query['lon']
+
+    # We should map values that cause an issue
+    if lon == '-124.6079655760445' and lat == '39.51923315410403':
+        lat = 33.5722
+        lon = -112.0891
+
+
     job = dict_to_query['job']
     salary_opinion = float(dict_to_query['salary'])
     weather_opinion = float(dict_to_query['weather'])
