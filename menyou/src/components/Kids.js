@@ -18,12 +18,14 @@ export default class Kids extends Component {
     render() {
       return (
         <div style={{textAlign: "center"}}>
-          Do you have children?
+          <h1>Do you have children?</h1>
           <div>
             <Button
             value={1}
+            size="massive"
             onClick={this.selectKids.bind(this)}>Yes</Button>
             <Button
+            size="massive"
             value={0}
             onClick={this.selectKids.bind(this)}>No</Button>
           </div>

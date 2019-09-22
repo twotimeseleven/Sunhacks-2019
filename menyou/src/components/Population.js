@@ -18,15 +18,19 @@ export default class Population extends Component {
     render() {
       return (
         <div style={{textAlign: "center"}}>
-          Would you rather live in a big or small city?
+          <h1> Would you rather live in a big or small city? </h1>
           <div>
             <Button
             value={1}
+            size="massive"
+
             onClick={this.selectWeather.bind(this)}>Big</Button>
             <Button
+            size="massive"
             value={0}
             onClick={this.selectWeather.bind(this)}>Small</Button>
             <Button
+            size="massive"
             value={2}
             onClick={this.selectWeather.bind(this)}>No Preference</Button>
           </div>

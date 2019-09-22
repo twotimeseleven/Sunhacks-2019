@@ -12,13 +12,11 @@ import Results from "../models/Results.js"
 
 
 const pages = [
-  ({ style, goForward }) => <animated.div style={{ ...style}}><Job goForward={goForward}/></animated.div>,
   ({ style, goForward }) => <animated.div style={{ ...style}}><Col goForward={goForward}/></animated.div>,
   ({ style, goForward }) => <animated.div style={{ ...style}}><Weather goForward={goForward}/></animated.div>,
   ({ style, goForward }) => <animated.div style={{ ...style}}><Kids goForward={goForward}/></animated.div>,
   ({ style, goForward }) => <animated.div style={{ ...style}}><Outdoors goForward={goForward}/></animated.div>,
   ({ style, goForward }) => <animated.div style={{ ...style}}><Population goForward={goForward}/></animated.div>,
-  ({ style, goForward }) => <animated.div style={{ ...style}}><SimpleTestButton goForward={goForward}/></animated.div>,
 ]
 function done() {
   console.log("done")

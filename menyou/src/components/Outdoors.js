@@ -18,13 +18,16 @@ export default class Outdoors extends Component {
     render() {
       return (
         <div style={{textAlign: "center"}}>
-          Do you like being outdoors?
+          <h1>Do you like being outdoors?</h1>
+
           <div>
             <Button
             value={1}
+            size="massive"
             onClick={this.selectWeather.bind(this)}>Yes</Button>
             <Button
             value={0}
+            size="massive"
             onClick={this.selectWeather.bind(this)}>No</Button>
           </div>
         </div>

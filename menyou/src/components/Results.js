@@ -4,6 +4,11 @@ import { Button } from 'semantic-ui-react'
 const queryString = require('query-string');
 const api = require("../api.js")
 
+
+const RESULTS = {
+  
+}
+
 export default class Routes extends Component {
   constructor(props){
     super(props)

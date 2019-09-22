@@ -17,10 +17,9 @@ export default class COL extends Component {
       }
     }
 
-    handleChange = (e) => this.setState({ salary: e }, () => {console.log(this.state)})
+    handleChange = (e) => this.setState({ salary: e })
 
     selectKids(e) {
-      console.log(e.target.value)
       Results.updateJob("salary", this.state.salary)
       this.props.goForward()
     }
@@ -29,13 +28,13 @@ export default class COL extends Component {
       return (
         <div style={{textAlign: "center"}}>
           <h1>What is your expected income?</h1>
-          <Slider
-          min={10000}
-          max={150000}
-          marks={marks}
-          step={10000}
-          onAfterChange={this.handleChange.bind(this)}
-          defaultValue={50000} />
+            <Slider
+            min={10000}
+            max={150000}
+            marks={marks}
+            step={10000}
+            onAfterChange={this.handleChange.bind(this)}
+            defaultValue={50000} />
 
            <div>
              <Button
