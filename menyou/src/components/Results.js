@@ -1,6 +1,6 @@
 import React, { Component, useState, useCallback } from 'react'
-import { Grid, Container} from "semantic-ui-react"
-import { Button } from 'semantic-ui-react'
+import { Grid, Container, Button } from "semantic-ui-react"
+import Map from "./Map.js"
 const queryString = require('query-string');
 const api = require("../api.js")
 
@@ -21,22 +21,43 @@ const DATA = {
  "total_score": 59.83100233100234
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 export default class Routes extends Component {
   constructor(props){
     super(props)
+    this.num_schools = 0
+    this.ready = false
+    this.results = {}
     this.state = {
       data: {}
     }
   }
 
+  saveSchoolResults(results) {
+    console.log(results)
+    this.num_schools = results
+    this.num_parks = getRandomInt(7)
+    this.test_results(this.state.data)
+  }
+
+  saveParkResults(results) {
+    console.log(results)
+    this.num_parks = getRandomInt(7)
+  }
+
   test_results(params) {
-    params.num_schools = 0
-    params.num_parks = 0
+    params.num_schools = this.num_schools
+    params.num_parks = this.num_parks
     console.log(params)
     api.get_score(params, cb => {
       // If 200, account added Successfully
       if (cb.status === 200) {
         console.log(cb)
+        this.results = cb.data
+        this.ready = true
       }
       // Need more error handling
       else {
@@ -45,25 +66,26 @@ export default class Routes extends Component {
     })
   }
 
-  componentDidMount(){
+  componentWillMount(){
     const parsed = queryString.parse(this.props.location.search);
-    this.test_results(parsed)
+    // this.test_results(parsed)
     this.setState({data: parsed})
   }
 
   render() {
     return (
-      <Grid stackable>
-        <Grid.Column stretched width={12} style={{overflowX: "auto", overflowY: "none"}}>
-          my map
-        </Grid.Column>
-        <Grid.Column width={4}>
-          <Container>
-            results
-          </Container>
-        </Grid.Column>
-
-      </Grid>
+      <div className="results">
+        <Grid stackable>
+          <Grid.Column stretched width={12} style={{overflowX: "auto", overflowY: "none"}}>
+            <Map saveParks={this.saveParkResults.bind(this)} saveSchools={this.saveSchoolResults.bind(this)}/>
+          </Grid.Column>
+          <Grid.Column width={4}>
+            <Container>
+              results
+            </Container>
+          </Grid.Column>
+        </Grid>
+      </div>
     )
   }
 }
