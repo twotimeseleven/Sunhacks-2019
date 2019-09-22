@@ -1,5 +1,5 @@
 #!flask/bin/python
-from flask import Flask, request, jsonify
+from flask import Flask, request, abort
 from pymongo import MongoClient
 import requests
 import json
@@ -119,12 +119,14 @@ def get_record(lat, lon):
     :param: A latitude and a longitude.
     :return: A DB value for the nearest town.
     """
-
-    # Make the API call
-    params = {"apiKey": "{}".format(key), "lat": lat, "lon": lon, "version": 4.10}
-    r = requests.get(url="https://geoservices.tamu.edu/Services/ReverseGeocoding/WebService/v04_01/Rest", params=params)
-    db_record = cities_collection.find_one({'city': r.text.split(",")[6]})
-    return db_record
+    try:
+        # Make the API call
+        params = {"apiKey": "{}".format(key), "lat": lat, "lon": lon, "version": 4.10}
+        r = requests.get(url="https://geoservices.tamu.edu/Services/ReverseGeocoding/WebService/v04_01/Rest", params=params)
+        db_record = cities_collection.find_one({'city': r.text.split(",")[6]})
+        return db_record
+    except Exception as e:
+        abort(500)
 
 
 def process_outdoor_score(outdoor_care_score, num_parks, outdoors_opinion):
