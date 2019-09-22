@@ -1,5 +1,6 @@
 import React, { Component, useState, useCallback } from 'react'
 import { Grid, Container, Button, Image, Segment } from "semantic-ui-react"
+import { Spin } from 'antd'
 import Map from "./Map.js"
 const queryString = require('query-string');
 const api = require("../api.js")
@@ -40,39 +41,53 @@ export default class ResultColumn extends Component {
   }
 
   render() {
+    console.log(this.props)
     return (
           <div>
-            <Segment style={{textAlign:"center", marginTop: 10}}>
-              <h1 style={{fontSize: 48}}>{data.city_name}, {data.state_id}</h1>
-              <h1 style={{fontSize: 144, fontWeight: "bold"}}>{data.grade}</h1>
-            </Segment>
-            <p style={{fontSize: 25, marginTop: 20,}}>CityScore: { Number((data.total_score).toFixed(2))} / 100</p>
+          {
+            this.props.ready ?
+              this.props.data?
+                <div>
+                  <Segment style={{textAlign:"center", marginTop: 10}}>
+                  <h1 style={{fontSize: 48}}>{this.props.data.city_name}, {this.props.data.state_id}</h1>
+                  <h1 style={{fontSize: 144, fontWeight: "bold"}}>{this.props.data.grade}</h1>
+                  </Segment>
+                  <p style={{fontSize: 25, marginTop: 20,}}>CityScore: { Number((this.props.data.total_score).toFixed(2))} / 100</p>
 
+                  <Grid stackable columns={2} style={{fontSize: 25}}>
+                  <Grid.Column>
+                  <Image src={cloud} size='tiny' />
+                  </Grid.Column>
+                  <Grid.Column>
+                  <p centered>Average Weather: {this.props.data.average_weather}</p>
+                  </Grid.Column>
 
-            <Grid stackable columns={2} style={{fontSize: 25}}>
-              <Grid.Column>
-                <Image src={cloud} size='tiny' />
-              </Grid.Column>
-              <Grid.Column>
-                <p centered>Average Weather: {data.average_weather}</p>
-              </Grid.Column>
+                  <Grid.Column>
+                  <Image src={population} size='tiny' />
+                  </Grid.Column>
+                  <Grid.Column>
+                  <p centered>Population: {this.props.data.population}</p>
+                  <p centered>Density: {this.props.data.density}</p>
+                  </Grid.Column>
 
-              <Grid.Column>
-                <Image src={population} size='tiny' />
-              </Grid.Column>
-              <Grid.Column>
-                <p centered>Population: {data.population}</p>
-                <p centered>Density: {data.density}</p>
-              </Grid.Column>
-
-              <Grid.Column>
-                <Image src={book} size='tiny' />
-              </Grid.Column>
-              <Grid.Column>
-                <p centered>Education Score: {Math.floor(data.total_school_rank)}</p>
-              </Grid.Column>
-            </Grid>
-          </div>
+                  <Grid.Column>
+                  <Image src={book} size='tiny' />
+                  </Grid.Column>
+                  <Grid.Column>
+                  <p centered>Education Score: {Math.floor(this.props.data.total_school_rank)}</p>
+                  </Grid.Column>
+                  </Grid>
+                </div> :
+                <div style={{textAlign: "center", marginTop: 50 }}>
+                  <h1> No results found. Data for this location is coming soon! </h1>
+                </div>
+            :
+            <div style={{textAlign: "center", marginTop: 50 }}>
+              <p> Gathering results, please wait.. </p>
+              <Spin size="large"/>
+            </div>
+          }
+        </div>
     )
   }
 }

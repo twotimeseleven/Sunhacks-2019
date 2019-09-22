@@ -17,7 +17,7 @@ export default class Landing extends Component {
         <Grid stackable  columns={2}>
           <Grid.Column stretched width={8}>
             <div style={{textAlign:"center"}}>
-              <h1 style={{fontSize:"8em", color: "#2185d0", marginBottom: "0px !important"}}> locale </h1>
+              <h1 style={{fontSize:"8em", color: "#2185d0", marginBottom: "0px !important"}}> locale. </h1>
             </div>
             <div style = {{margin:"auto", paddingBottom: 20}}>
               <Image src={img1} size='medium' />

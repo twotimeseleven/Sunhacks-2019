@@ -31,7 +31,7 @@ class Routes extends Component {
             <Menu.Item >
               <Link to="/"/>
               <Image src={img1} style={{ height: 50, width: 50, paddingTop: 5, paddingBottom: 5}} verticalAlign='top' />
-              Locale
+              locale.
             </Menu.Item>
 
             <Menu.Item disabled className="demo">sunhacks 2019</Menu.Item>
