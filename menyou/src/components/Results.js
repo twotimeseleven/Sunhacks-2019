@@ -1,20 +1,13 @@
 import React, { Component, useState, useCallback } from 'react'
-import { Grid, Container, Image} from "semantic-ui-react"
-import { Button } from 'semantic-ui-react'
+import { Grid, Container, Button, Image } from "semantic-ui-react"
+import Map from "./Map.js"
+import ResultColumn from "./ResultColumn.js"
+import MapColumn from "./ResultMap.js"
+
 const queryString = require('query-string');
 const api = require("../api.js")
-const img1 = require('../imgs/sidebar/A.png')
-const img2 = require('../imgs/sidebar/B.png')
-const img3 = require('../imgs/sidebar/C.png')
-const img4 = require('../imgs/sidebar/D.png')
-const img5 = require('../imgs/sidebar/F.png')
-const hand = require('../imgs/sidebar/hand.png')
-const book = require('../imgs/sidebar/open-book.png')
-const population= require('../imgs/sidebar/population.png')
-const cloud = require('../imgs/sidebar/cloud.png')
 
-
-const RESULTS = {
+const data = {
  "average_weather": 86.6,
  "city_name": "Phoenix",
  "cost_of_living": 68.64,
@@ -28,65 +21,80 @@ const RESULTS = {
  "total_score": 59.83100233100234
 }
 
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 export default class Routes extends Component {
   constructor(props){
     super(props)
+    this.num_schools = 0
+    this.ready = false
     this.state = {
-      data: {}
+      data: {},
+      ready: false,
+      results: data
     }
   }
 
-  test_results(params) {
+  saveSchoolResults(results, lat, long) {
+    console.log(results)
+    this.num_schools = results
+    this.num_parks = getRandomInt(7)
+    this.test_results(this.state.data, lat/100000, long/100000)
+  }
+
+  saveParkResults(results) {
+    console.log(results)
+    this.num_parks = getRandomInt(7)
+  }
+
+  test_results(params, lat, long) {
+    console.log(lat, long)
+    var data = null
+    params.num_schools = this.num_schools
+    params.num_parks = this.num_parks
+    params.lat = long
+    params.lon = lat
+    console.log(params)
     api.get_score(params, cb => {
       // If 200, account added Successfully
+      console.log(this.ready)
       if (cb.status === 200) {
         console.log(cb)
+        data = cb.data
+        this.results = cb.data
+        this.ready = true
       }
       // Need more error handling
       else {
 
       }
+      this.setState({
+        ready: true,
+        results: data
+      })
     })
   }
 
-  componentDidMount(){
+  componentWillMount(){
     const parsed = queryString.parse(this.props.location.search);
-    console.log(parsed)
-    this.test_results(parsed)
     this.setState({data: parsed})
   }
 
   render() {
     return (
-      <Grid stackable>
-        <Grid.Column stretched width={12} style={{overflowX: "auto", overflowY: "none"}}>
-          my map
-        </Grid.Column>
-        <Grid.Column width={4}>
-          <Container style={{margin: 0, textAlign: "center"}}>
-            <h1 style={{fontSize: 50, marginTop: 20, marginBottom: 0}} centered>CITY, STATE</h1>
-            <Image src={img2} size='small' style={{marginTop: 0}} centered/>
-            <p style={{fontSize: 25, marginTop: 20, marginBottom: 100}}  centered>CityScore: X / 100</p>
-
-
-            <Grid.Column width={1} style={{float: "left", marginLeft: 100}}>
-             <Image src={cloud} size='tiny' style={{marginTop: 0}} centered/>
-             <Image src={hand} size='tiny' style={{marginTop: 25}} centered/>
-             <Image src={population} size='tiny' style={{marginTop: 25}} centered/>
-             <Image src={book} size='tiny' style={{marginTop: 25}} centered/>
+      <div className="results">
+          <Grid stackable>
+            <Grid.Column stretched width={12}>
+              <MapColumn saveSchools={this.saveSchoolResults.bind(this)}/>
             </Grid.Column>
-            <Grid.Column width={3}>
-            <p style={{fontSize: 25, marginTop: 125, marginBottom: 50}}  centered>Weather Data</p>
-            <p style={{fontSize: 25, marginTop: 80, marginBottom: 50}}  centered>CoL Data</p>
-            <p style={{fontSize: 25, marginTop: 70, marginBottom: 50}}  centered>Pop. Data</p>
-            <p style={{fontSize: 25, marginTop: 60, marginBottom: 100}}  centered>School Data</p>
+              <Grid.Column width={4}>
+                <ResultColumn data={this.state.results} ready={this.state.ready}/>
             </Grid.Column>
-
-
-          </Container>
-        </Grid.Column>
-
-      </Grid>
+          </Grid>
+      </div>
     )
   }
 }
