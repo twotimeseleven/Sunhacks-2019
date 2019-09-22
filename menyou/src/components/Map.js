@@ -106,6 +106,7 @@ const MyMap = (props) => {
     map.add(parkLayer,0);
 
     setupSchool()
+
     function setupSchool() {
       view.whenLayerView(schoolLayer).then(function(layerView) {
         featureLayerView = layerView;
