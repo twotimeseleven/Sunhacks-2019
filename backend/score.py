@@ -1,31 +1,25 @@
+def care_score(res: dict) -> dict:
+    score_weights = {}
+    outdoors_flag = False
+    size_flag = False
+    kids_flag = False
+    count = 2
 
-def care_score(res: dict):
-    a = {}
-    if res['outdoors'] == 0 and res['population'] != 2:
-        a['salary'] = 25
-        a['weather'] = 25
-        a['kids'] = 25
-        a['outdoors'] = 0
-        a['population'] = 25
+    if res['outdoors'] != 0:
+        count += 1
+        outdoors_flag = True
+    if res['size'] != 2:
+        count += 1
+        population_flag = True
+    if res['kids'] != 0:
+        count += 1
+        kids_flag = True
 
-    elif res['population'] == 2 and res['outdoors'] != 0:
-        a['salary'] = 25
-        a['weather'] = 25
-        a['kids'] = 25
-        a['outdoors'] = 25
-        a['population'] = 0
+    weight = 100 / count
+    score_weights['outdoors'] = weight if outdoors_flag else 0
+    score_weights['salary'] = weight
+    score_weights['temperature'] = weight
+    score_weights['kids'] = weight if kids_flag else 0
+    score_weights['size'] = weight if size_flag else 0
 
-    elif res['outdoors'] == 0 and res['population'] == 2:
-        a['salary'] = 33.33
-        a['weather'] = 33.33
-        a['kids'] = 33.33
-        a['outdoors'] = 0
-        a['population'] = 0
-
-    else:
-        a['salary'] = 20
-        a['weather'] = 20
-        a['kids'] = 20
-        a['outdoors'] = 20
-        a['population'] = 20
-    return a
+    return score_weights
