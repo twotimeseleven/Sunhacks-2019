@@ -76,6 +76,12 @@ export default class ResultColumn extends Component {
                   <Grid.Column>
                   <p centered>Education Score: {Math.floor(this.props.data.total_school_rank)}</p>
                   </Grid.Column>
+                  <Grid.Column>
+                  <Image src={hand} size='tiny' />
+                  </Grid.Column>
+                  <Grid.Column>
+                  <p centered>Cost of Living Index: {Math.floor(this.props.data.cost_of_living)}</p>
+                  </Grid.Column>
                   </Grid>
                 </div> :
                 <div style={{textAlign: "center", marginTop: 50 }}>

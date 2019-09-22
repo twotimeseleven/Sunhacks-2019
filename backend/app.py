@@ -4,6 +4,7 @@ from pymongo import MongoClient
 import requests
 import json
 
+
 with open("keys.json", "r") as file:
     data = json.load(file)
     uname = data['UNAME']
@@ -30,14 +31,38 @@ def do_everything():
     dict_to_query = {}
     for arg in arguments:
         dict_to_query[arg[0]] = arg[1]
-    lat = dict_to_query['lat']
-    lon = dict_to_query['lon']
+    lat = round(float(dict_to_query['lat']), 4)
+    lon = round(float(dict_to_query['lon']), 4)
 
-    # We should map values that cause an issue
-    if lon == '-124.6079655760445' and lat == '39.51923315410403':
+    # Tempe -> Phoenix Mapping
+    if lon == -124.608 and lat == 39.5192:
         lat = 33.5722
         lon = -112.0891
 
+    # Honolulu Mapping
+    if lon == -175.7266 and lat == 24.2831:
+        lat = 21.3294
+        lon = -157.846
+
+    # LA Mapping
+    if lat == 40.3605 and lon == -131.6301:
+        lat = 34.1139
+        lon = -118.4068
+
+    # NY Mapping
+    if lon == -82.3844 and lat == 49.704:
+        lat = 40.6943
+        lon = -73.9249
+
+    # Miami Mapping
+    if lat == 29.7122 and lon == -89.2757:
+        lat = 25.7839
+        lon = -80.2102
+
+    # Savannah Mapping
+    if lon == -90.2703 and lat == 37.7395:
+        lat = 32.0281
+        lon = -81.1785
 
     job = dict_to_query['job']
     salary_opinion = float(dict_to_query['salary'])
@@ -130,7 +155,14 @@ def get_record(lat, lon):
         # Make the API call
         params = {"apiKey": "{}".format(key), "lat": lat, "lon": lon, "version": 4.10}
         r = requests.get(url="https://geoservices.tamu.edu/Services/ReverseGeocoding/WebService/v04_01/Rest", params=params)
-        db_record = cities_collection.find_one({'city': r.text.split(",")[6]})
+        temp = r.text.split(",")[6]
+        if r.text.split(",")[6] == 'Tamiami':
+            temp = "Miami"
+        if r.text.split(",")[6] == 'chatham':
+            temp = "Savannah"
+        if r.text.split(",")[6] == 'Urban Honolulu':
+            temp = "Honolulu"
+        db_record = cities_collection.find_one({'city': temp})
         return db_record
     except Exception as e:
         abort(500)
