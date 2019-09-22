@@ -26,8 +26,8 @@ export default class COL extends Component {
 
     render() {
       return (
-        <div style={{textAlign: "center"}}>
-          <h1>What is your expected income?</h1>
+        <div style={{textAlign: "center", marginTop: 0}}>
+          <h1 style={{marginBottom: 60}}>What is your expected income?</h1>
             <Slider
             min={10000}
             max={150000}
@@ -37,11 +37,9 @@ export default class COL extends Component {
             defaultValue={50000} />
 
            <div>
-             <Button
-             size="massive"
-             value={1}
-             onClick={this.selectKids.bind(this)}>Continue</Button>
-           </div>
+             <Button size="massive" color="blue" value={1} onClick={this.selectKids.bind(this)} style = {{marginTop: 30, marginLeft: 20, marginBottom: 50}}>Continue</Button>
+             </div>
+
         </div>
       )
 
