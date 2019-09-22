@@ -16,9 +16,9 @@ const MyMap = (props) => {
     "esri/Graphic",
     "esri/geometry/Extent",
   ]).then(([MapView, Map, FeatureLayer, Search,
-            Polyline, Point, watchUtils, SketchViewModel,
-            Extent, Graphic
-          ]) => {
+    Polyline, Point, watchUtils, SketchViewModel,
+    Extent, Graphic
+  ]) => {
 
     let sketchViewModel, featureLayerView, featureLayerView1, pausableWatchHandle, chartExpand;
 
@@ -88,18 +88,63 @@ const MyMap = (props) => {
     });
     view.ui.add(search, "top-right");
 
+    var schoolRenderer = {
+      type: "simple",
+      symbol: {
+        type: "picture-marker",
+        url:"https://i.imgur.com/64RIDz7.png",
+        width: "24px",
+        height: "24px"
+      }
+    }
+
+    var libraryRenderer = {
+      type: "simple",
+      symbol: {
+        type: "picture-marker",
+        url:"https://i.imgur.com/4uk9NKY.png",
+        width: "24px",
+        height: "24px"
+      }
+    }
+
+
+    var schoolPopup = {
+      "title": "{NAME}",
+      "content": "<b>Address: </b>{ADDRESS}<br/><b>County: </b>{COUNTY}<br/><b>Website: </b>{WEBSITE}<br/><b>Phone: </b>{TELEPHONE}"
+    }
+
+    var parkPopup = {
+      "title":"{NAME}",
+      "content":"<b>Type:</b> {FCC}<br/><b>Square Miles:</b> {SQMI}"
+    }
+
+    var libraryPopup = {
+      "title":"{LIBNAME}",
+      "content":"<b>Address: </b>{ADDRESS}<br/><b>Weeks Open:</b> {WKS_OPEN}<br/><b>Hours: </b>{HOURS}"
+    }
 
     var schoolLayer = new FeatureLayer({
-      url: 'https://services7.arcgis.com/1Q2JactmDiGmRn7Q/arcgis/rest/services/PublicSchools_0/FeatureServer/0?token=ZSFHSOncScL5Si_MsRUp139MP8wGQO1hlv1yHjdjXDBKqmQjrKZ1vLI1GZCpxU7JfD9l3NcWxwQZioE1aLrRQ4IENltQ--Dq9RpbpG_joxrkqZ22RjHRNJ79RbTwDwHAFX7jjIVN-eJJEAuuH61xFehKP2xwMpgF2WcMkTLZgkHd3m8eaEClAiNJZrCOqHBez2BlT4Lm98rmoU-d22f_u3zKKNj5ckdJHV3OQL26VaJdEsVQQ3w6DyYYtMwNamWc'
+      url: 'https://services7.arcgis.com/1Q2JactmDiGmRn7Q/arcgis/rest/services/PublicSchools_0/FeatureServer/0?token=ZSFHSOncScL5Si_MsRUp139MP8wGQO1hlv1yHjdjXDBKqmQjrKZ1vLI1GZCpxU7JfD9l3NcWxwQZioE1aLrRQ4IENltQ--Dq9RpbpG_joxrkqZ22RjHRNJ79RbTwDwHAFX7jjIVN-eJJEAuuH61xFehKP2xwMpgF2WcMkTLZgkHd3m8eaEClAiNJZrCOqHBez2BlT4Lm98rmoU-d22f_u3zKKNj5ckdJHV3OQL26VaJdEsVQQ3w6DyYYtMwNamWc',
+      renderer: schoolRenderer,
+      outField:["NAME", "ADDRESS", "COUNTY", "WEBSITE", "TELEPHONE"],
+      popupTemplate: schoolPopup
     });
 
     var parkLayer = new FeatureLayer({
-      url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Parks/FeatureServer/0'
-    })
+      url: 'https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/USA_Parks/FeatureServer/0',
+      opacity: 0.4,
+      outField:["NAME","FCC","FID","SQMI"],
+      popupTemplate: parkPopup,
+
+    });
 
     var libraryLayer = new FeatureLayer({
-      url: 'https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/Enriched%20PLS_FY2016_Outlet_puout16a/FeatureServer/0'
-    })
+      url: 'https://services1.arcgis.com/4yjifSiIG17X0gW4/arcgis/rest/services/Enriched%20PLS_FY2016_Outlet_puout16a/FeatureServer/0',
+      renderer: libraryRenderer,
+      outField:["ADDRESS", "CITY", "WKS_OPEN","HOURS"],
+      popupTemplate: libraryPopup
+    });
 
     map.add(schoolLayer,0);
     map.add(libraryLayer,0);
