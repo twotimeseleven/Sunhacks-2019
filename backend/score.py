@@ -29,8 +29,3 @@ def care_score(res: dict):
         a['outdoors'] = 20
         a['population'] = 20
     return a
-
-
-if __name__ == '__main__':
-    test = care_score({"salary": 50000, "weather": 1, "kids": 1, "outdoors": 0, "population": 2})
-pass
