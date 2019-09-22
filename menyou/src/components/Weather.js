@@ -30,7 +30,7 @@ export default class Weather extends Component {
       return (
 
         <div style={{textAlign: "center"}}>
-          <h1>What is your idea of perfect weather??</h1>
+          <h1 style={{marginBottom: 60}}>What is your idea of perfect weather??</h1>
             <Slider
             min={0}
             max={100}
@@ -40,10 +40,8 @@ export default class Weather extends Component {
             defaultValue={65} />
 
            <div>
-             <Button
-             size="massive"
-             value={1}
-             onClick={this.selectWeather.bind(this)}>Continue</Button>
+
+             <Button size="massive" color="blue" value={1} onClick={this.selectWeather.bind(this)} style = {{marginTop: 30, marginLeft: 20, marginBottom: 50}}>Continue</Button>
            </div>
         </div>
       )

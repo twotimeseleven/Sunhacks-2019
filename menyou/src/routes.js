@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 
 import { Route, Switch, withRouter, Redirect } from "react-router-dom";
-
+const img1 = require('../src/imgs/compass2.png')
 
 const header_styles = {
   color: "white",
@@ -26,9 +26,14 @@ class Routes extends Component {
         <div>
           <Menu
             mode="horizontal"
-            style={{ lineHeight: '64px' }}
+            style={{ lineHeight: '54px' }}
           >
-            <Menu.Item><Link to="/" /><span> Locale </span></Menu.Item>
+            <Menu.Item >
+              <Link to="/"/>
+              <Image src={img1} style={{ height: 50, width: 50, paddingTop: 5, paddingBottom: 5}} verticalAlign='top' />
+              Locale
+            </Menu.Item>
+
             <Menu.Item disabled className="demo">sunhacks 2019</Menu.Item>
 
           </Menu>

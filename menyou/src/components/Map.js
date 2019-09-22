@@ -274,7 +274,7 @@ const MyMap = (props) => {
       // Create center, edge, polyline and buffer graphics for the first time
       var schoolCount = querySchools().then(function(results) {
         console.log(results)
-        props.saveSchools(results)
+        props.saveSchools(results, centerPoint.x, centerPoint.y)
       })
 
     }

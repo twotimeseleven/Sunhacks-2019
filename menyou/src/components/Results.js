@@ -36,11 +36,12 @@ export default class Routes extends Component {
     }
   }
 
-  saveSchoolResults(results) {
+  saveSchoolResults(results, lat, long) {
     console.log(results)
+
     this.num_schools = results
     this.num_parks = getRandomInt(7)
-    this.test_results(this.state.data)
+    this.test_results(this.state.data, lat/100000, long/100000)
   }
 
   saveParkResults(results) {
@@ -48,9 +49,13 @@ export default class Routes extends Component {
     this.num_parks = getRandomInt(7)
   }
 
-  test_results(params) {
+  test_results(params, lat, long) {
+    console.log(lat, long)
+
     params.num_schools = this.num_schools
     params.num_parks = this.num_parks
+    params.lat = lat
+    params.lon = long
     console.log(params)
     api.get_score(params, cb => {
       // If 200, account added Successfully
