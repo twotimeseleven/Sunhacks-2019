@@ -13,7 +13,7 @@
     "esri-loader": "^2.10.0",
     "history": "4.9.0",
     "moment": "2.24.0",
-    "node-sass": "4.12.0",
+    "node-sass": "7.0.0",
     "nouislider": "14.0.2",
     "prop-types": "15.7.2",
     "query-string": "^6.8.3",
